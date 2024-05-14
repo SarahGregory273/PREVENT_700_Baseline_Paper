@@ -1,0 +1,312 @@
+PREVENT<- read_excel("Desktop/PREVENT n700 Paper/PREVENTBaselinePaper.xlsx")
+
+tablevars <-c("site")
+table1 <-CreateTableOne (vars=tablevars,data=PREVENT)
+table1
+
+hist(PREVENT$nbeduc)
+range(PREVENT$nbeduc, na.rm=TRUE)
+
+tablevars <-c("nbeduc")
+table1 <-CreateTableOne (vars=tablevars,data=PREVENT)
+table1
+
+tablevars <-c("nbeduc")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("parentDemHistory")
+table1 <-CreateTableOne (vars=tablevars,data=PREVENT)
+table1
+
+tablevars <-c("sex")
+table1 <-CreateTableOne (vars=tablevars,data=PREVENT)
+table1
+
+range(PREVENT$age, na.rm=TRUE)
+
+tablevars <-c("age")
+table1 <-CreateTableOne (vars=tablevars,data=PREVENT)
+table1
+
+PREVENT$apoe4 <-factor(PREVENT$apoe4, levels=c(0,1), labels=c("Non-Carrier", "Carrier"))
+tablevars <-c("apoe4")
+table1 <-CreateTableOne (vars=tablevars,data=PREVENT)
+table1
+
+PREVENT$CarrierHomHet <-factor(PREVENT$CarrierHomHet, levels=c(0,1,2), labels=c("Non-Carrier", "Heterozygote", "Homozygote"))
+tablevars <-c("CarrierHomHet")
+table1 <-CreateTableOne (vars=tablevars,data=PREVENT)
+table1
+
+Risk <-subset (PREVENT, PREVENT$IncludeRisk=="1")
+tablevars <-c("risk")
+table1 <-CreateTableOne (vars=tablevars,data=Risk)
+table1
+
+ACE <-subset (PREVENT, PREVENT$IncludeACE=="1")
+range(ACE$ace_score)
+tablevars <-c("ace_score") 
+table1 <-CreateTableOne (vars=tablevars,data=ACE)
+table1
+
+Risk <-subset (ACE, ACE$IncludeRisk=="1")
+
+tablevars <-c("ace_score") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=Risk)
+table1
+
+tablevars <-c("ace_score") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=ACE)
+table1
+
+##### Task 6 #####
+Task6DF <-subset (PREVENT, PREVENT$IncludeTask6=="1")
+
+range(Task6$Task6, na.rm=TRUE)
+
+tablevars <-c("Task6") 
+table1 <-CreateTableOne (vars=tablevars,data=Task6)
+table1
+
+Task6Risk <-subset(Task6, Task6$IncludeRisk=="1")
+
+tablevars <-c("Task6") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=Task6)
+table1
+
+tablevars <-c("Task6") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=Task6)
+table1
+
+##### Task 18 #####
+Task18 <-subset (PREVENT, PREVENT$IncludeTask18=="1")
+range(Task18$Task18)
+
+tablevars <-c("Task18") 
+table1 <-CreateTableOne (vars=tablevars,data=Task18)
+table1
+
+Task18DF <-subset (PREVENT, PREVENT$IncludeTask18=="1")
+Task18Risk <-subset(Task18, Task18$IncludeRisk=="1")
+
+tablevars <-c("Task18") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=Task18)
+table1
+
+tablevars <-c("Task18") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=Task18)
+table1
+
+##### Task 11 #####
+Task11DF <-subset (PREVENT, PREVENT$IncludeTask11=="1")
+range(Task11$Task11)
+
+tablevars <-c("Task11") 
+table1 <-CreateTableOne (vars=tablevars,data=Task11)
+table1
+
+tablevars <-c("Task11") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=Task11)
+table1
+
+tablevars <-c("Task11") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=Task11)
+table1
+
+##### Task 12 #####
+Task12DF<-subset(PREVENT, PREVENT$IncludeTask12=="1")
+range(Task12$Task12, na.rm=TRUE)
+
+tablevars <-c("Task12") 
+table1 <-CreateTableOne (vars=tablevars,data=Task12)
+table1
+
+Task12Risk <-subset(Task12DF, Task12DF$IncludeRisk=="1")
+
+tablevars <-c("Task12") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=Task12)
+table1
+
+tablevars <-c("Task12") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=Task12)
+table1
+
+##### Task 19 #####
+Task19DF<-subset(PREVENT, PREVENT$IncludeTask19=="1")
+range(Task19$Task19)
+
+tablevars <-c("Task19") 
+table1 <-CreateTableOne (vars=tablevars,data=Task19)
+table1
+
+Task19Risk <-subset(Task19DF, Task19DF$IncludeRisk=="1")
+
+tablevars <-c("Task19") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=Task19)
+table1
+
+tablevars <-c("Task19") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=Task19)
+table1
+
+##### Task 20 #####
+Task20DF<- subset (PREVENT, PREVENT$IncludeTask20=="1")
+range(Task20$Task20)
+
+tablevars <-c("Task20") 
+table1 <-CreateTableOne (vars=tablevars,data=Task20)
+table1
+
+Task20Risk <-subset(Task20DF, Task20DF$IncludeRisk=="1")
+
+tablevars <-c("Task20") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=Task20)
+table1
+
+tablevars <-c("Task20") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=Task20)
+table1
+
+##### Task 24 #####
+Task24DF<-subset(PREVENT, PREVENT$IncludeTask24=="1")
+range(Task24$Task24)
+
+tablevars <-c("Task24") 
+table1 <-CreateTableOne (vars=tablevars,data=Task24)
+table1
+
+Task24Risk <-subset(Task24DF, Task24DF$IncludeRisk=="1")
+
+tablevars <-c("Task24") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=Task24)
+table1
+
+tablevars <-c("Task24") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=Task24)
+table1
+
+##### Supermarket #####
+Supermarket <-subset (PREVENT, PREVENT$IncludeST=="1")
+
+range(STSum$STSum, na.rm=TRUE)
+
+tablevars <-c("STSum") 
+table1 <-CreateTableOne (vars=tablevars,data=STSum)
+table1
+
+Risk <-subset (Supermarket, Supermarket$IncludeRisk=="1")
+
+tablevars <-c("STSum") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=STSum)
+table1
+
+tablevars <-c("STSum") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=STSum)
+table1
+
+##### 4MT #####
+FourMT <-subset (PREVENT, PREVENT$MTInclude=="1")
+
+tablevars <-c("site")
+table1 <-CreateTableOne (vars=tablevars,data=FourMT)
+table1
+
+range(FMT$MTTotal, na.rm=TRUE)
+
+tablevars <-c("MTTotal") 
+table1 <-CreateTableOne (vars=tablevars,data=FMT)
+table1
+
+Risk <-subset (FourMT, FourMT$IncludeRisk=="1")
+
+tablevars <-c("MTTotal") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"),data=FMT)
+table1
+
+tablevars <-c("MTTotal") 
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"),data=FMT)
+table1
+
+#### Risk factors by risk and sex ####
+tablevars <-c("Less_than_13_years")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("Less_than_13_years")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+tablevars <-c("medhear_act")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("medhear_act")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+tablevars <-c("hypertension")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("hypertension")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+tablevars <-c("HypertensionDrug")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("HypertensionDrug")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+tablevars <-c("alcohol_14")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("alcohol_14")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+tablevars <-c("smoker")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("smoker")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+tablevars <-c("cesd_16")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("cesd_16")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+tablevars <-c("DepressionDrug")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("DepressionDrug")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+tablevars <-c("meddiab_act")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("meddiab_act")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+tablevars <-c("Quality")
+table1 <-CreateTableOne (vars=tablevars,strata=c("risk"), data=PREVENT)
+table1
+
+tablevars <-c("Quality")
+table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
+table1
+
+New File at / · SarahGregory273/PREVENT_700_Baseline_Paper
