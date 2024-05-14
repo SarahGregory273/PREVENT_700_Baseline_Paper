@@ -1,0 +1,3 @@
+mdl=fitlm(fullbase_qc,'mTH~APOE4+age+sex+educ+center','CategoricalVars',{'sex','APOE4','FHD','center'})
+mdl=fitlm(fullbase_qc,'TotalGrayVol~APOE4+age+sex+educ+center+EstimatedTotalIntraCranialVol','CategoricalVars',{'sex','APOE4','FHD','center'})
+mdl=fitlm(fullbase_qc,'hipp~APOE4+age+sex+educ+center+EstimatedTotalIntraCranialVol','CategoricalVars',{'sex','APOE4','FHD','center'})
