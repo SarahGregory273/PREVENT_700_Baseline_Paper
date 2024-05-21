@@ -310,3 +310,32 @@ table1 <-CreateTableOne (vars=tablevars,strata=c("sex"), data=PREVENT)
 table1
 
 New File at / · SarahGregory273/PREVENT_700_Baseline_Paper
+
+# head injury
+list_missingBISQ <- Reduce(intersect,list(subset(df, is.na(tbi_numLOC))$id,
+                                          subset(df, is.na(tbi_TotBlows))$id,
+                                          subset(df, is.na(tbi_Severity))$id))
+
+df$tbi <- NA
+df$tbi <- ifelse(df$tbi_TotBlows==0, 0, df$tbi)
+df$tbi <- ifelse(df$tbi_numLOC>0, 1, df$tbi)
+df$tbi <- ifelse(df$tbi_numLOC==0 | is.na(df$tbi_numLOC), 0, df$tbi)
+df$tbi <- ifelse(df$id %in% list_missingBISQ, NA, df$tbi)
+
+
+# Physical inactivity 
+df$phys.inactive[df$lifespo_mod<5 & df$lifespo_vig<4] <- 1
+df$phys.inactive[df$lifespo_mod==5 | df$lifespo_vig>=4] <- 0
+
+
+# Overweight/obese
+df$bmi <- df$weight/(df$height/100)^2
+
+df$bmi.obese <- df$bmi
+df$bmi.obese[df$bmi.obese<30] <- 0
+df$bmi.obese[df$bmi.obese>=30] <- 1
+
+df$bmi.overweight <- df$bmi
+df$bmi.overweight[df$bmi<25] <- 0
+df$bmi.overweight[df$bmi>=25] <- 1
+
