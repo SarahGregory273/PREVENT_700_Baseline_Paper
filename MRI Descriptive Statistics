@@ -1,3 +1,58 @@
 mdl=fitlm(fullbase_qc,'mTH~APOE4+age+sex+educ+center','CategoricalVars',{'sex','APOE4','FHD','center'})
 mdl=fitlm(fullbase_qc,'TotalGrayVol~APOE4+age+sex+educ+center+EstimatedTotalIntraCranialVol','CategoricalVars',{'sex','APOE4','FHD','center'})
 mdl=fitlm(fullbase_qc,'hipp~APOE4+age+sex+educ+center+EstimatedTotalIntraCranialVol','CategoricalVars',{'sex','APOE4','FHD','center'})
+
+
+WMH volumes were normalized by total intracranial volume to account for differences in head sizes and cube-root transformed, in that order. Non-normalized WMH volumes also underwent cube-root transformation for sensitivity analysis.
+
+df$v1.wmhv.tot.adj <- (df$v1.wmhv.tot / df$v1.tiv)*100
+df$v1.wmhv.tot.adj.cube <- sign(df$v1.wmhv.tot.adj) * abs(df$v1.wmhv.tot.adj)^(1/3)
+
+Our sample had an average WMH volume of 2.26  2.77ml (n=643; median = 1.39 ml).
+
+	# Number of participants with WMHV data
+sum(!is.na(df$v1.wmhv.tot), na.rm=T)
+
+# Mean and SD
+mean(df$v1.wmhv.tot, na.rm=T)
+sd(df$v1.wmhv.tot, na.rm=T)
+
+# Median
+median(df$v1.wmhv.tot, na.rm=T)
+
+
+A small proportion (6.2%; n=40 out of 647) had a high burden of WMH.
+
+	# Definition of “high” WMH burden, based on Fazekas rating
+df$wmh.high <- ifelse(df$v1.pvh==3, 1,
+                        ifelse(df$v1.dwmh>=2,1,0))
+
+# Computation of % with high WMH burden
+n <- sum(!is.na(df$wmh.high), na.rm=T)
+sum(df$wmh.high=="1", na.rm=T)/n 
+
+
+WMH burden increased with older age in both the unadjusted (t = 8.15, p < 0.001) and adjusted analysis controlling for sex, education, and site (t = 7.91, p < 0.001). 
+
+	# Unadjusted for covariates
+cor.test(df$v1.wmhv.tot.adj.cube, df$age)
+
+# Adjusted for covariates
+summary(lm(v1.wmhv.tot.adj.cube ~ sex + age.c + edu.c + site, data = df))
+
+
+Males (2.99 ml) had greater WMH volumes than females (1.81 ml), even after normalising for head size [(WMH volume/intracranial volume)*100%; males = 0.16, females = 0.11] – results were significant in both unadjusted (rho = 0.25, p < .001) and covariate-adjusted analyses of WMH burden (t = 5.41, p < .001). 
+
+# Mean volumes (unadjusted for head size)
+mean(subset(df, sex=="Male")$v1.wmhv.tot, na.rm=T)
+mean(subset(df, sex=="Female")$v1.wmhv.tot, na.rm=T)
+
+# Mean volumes (adjusted for head size)
+mean(subset(df, sex=="Male")$v1.wmhv.tot.adj, na.rm=T)
+mean(subset(df, sex=="Female")$v1.wmhv.tot.adj, na.rm=T)
+
+	# Testing of group differences, unadjusted for covariates
+cor.test(df$v1.wmhv.tot.adj.cube, df$sex.male.numeric, method='spearman')
+
+# Testing of group differences, adjusted for covariates
+summary(m <- lm(v1.wmhv.tot.adj.cube ~ sex + age.c + edu.c + site, data = df))
